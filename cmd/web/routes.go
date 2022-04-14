@@ -2,8 +2,8 @@ package main
 
 import (
 	"net/http"
-	"web/pkg/config"
-	"web/pkg/handlers"
+	"github.com/igolubevJ/bookings/pkg/config"
+	"github.com/igolubevJ/bookings/pkg/handlers"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
