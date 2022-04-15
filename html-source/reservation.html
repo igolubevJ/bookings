@@ -152,6 +152,8 @@
 
     <script src="https://unpkg.com/notie"></script>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
       (function() {
         'use strict';
@@ -179,7 +181,9 @@
 
 
       document.getElementById("myBtn").addEventListener("click", () => {
-        alertSuccess("This is the button");
+        // alertSuccess("This is the button");
+
+        nitifyModal("title", "<em>hi world</em>", "success", "My text for the button");
       });
 
 
@@ -187,6 +191,15 @@
         notie.alert({
           type: msgType,
           text: msg,
+        });
+      }
+
+      function nitifyModal(title, text, icon, confirmButtonText) {
+        Swal.fire({
+          title: title,
+          html: text,
+          icon: icon,
+          confirmButtonText: confirmButtonText
         });
       }
 
