@@ -155,6 +155,9 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+
+      let attention = Prompt();
+
       (function() {
         'use strict';
         window.addEventListener('load', function() {
@@ -182,8 +185,16 @@
 
       document.getElementById("myBtn").addEventListener("click", () => {
         // alertSuccess("This is the button");
+        // notifyModal("title", "<em>hi world</em>", "success", "My text for the button");
 
-        nitifyModal("title", "<em>hi world</em>", "success", "My text for the button");
+        // attention.toast({
+        //   msg: "Hello JS",
+        //   icon: "error"
+        // });
+
+        attention.error({
+          msg: "Hello JS"
+        });
       });
 
 
@@ -194,13 +205,75 @@
         });
       }
 
-      function nitifyModal(title, text, icon, confirmButtonText) {
+      function notifyModal(title, text, icon, confirmButtonText) {
         Swal.fire({
           title: title,
           html: text,
           icon: icon,
           confirmButtonText: confirmButtonText
         });
+      }
+
+      function Prompt() {
+        const toast = function(c) {
+          const {
+            msg = "",
+            icon = "success",
+            position = "top-end",
+          } = c;
+
+          const Toast = Swal.mixin({
+            toast: true,
+            title: msg,
+            position: position,
+            icon: icon,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+          Toast.fire({})
+        }
+
+        const success = function(c) {
+          const {
+            msg = "",
+            title = "",
+            footer = "", 
+          } = c;
+
+          Swal.fire({
+            icon: 'success',
+            title: title,
+            text: msg,
+            footer: footer
+          });
+        }
+
+        const error = function(c) {
+          const {
+            msg = "",
+            title = "",
+            footer = "", 
+          } = c;
+
+          Swal.fire({
+            icon: 'error',
+            title: title,
+            text: msg,
+            footer: footer
+          });
+        }
+
+        return {
+          toast: toast,
+          success: success,
+          error: error
+        }
       }
 
     </script>
