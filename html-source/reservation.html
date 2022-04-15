@@ -17,35 +17,7 @@
 
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
 
-  <style>
-
-    .my-footer {
-      height: 5em;
-      background-color: #163565;
-      margin-top: 1.5em;
-      padding: 1em;
-      color: #ffffff;
-      font-size: 80%;
-    }
-
-    .room-img {
-      max-width: 50%;
-    }
-
-    .notie-container {
-      box-shadow: none;
-    }
-
-    .datepicker {
-      z-index: 10000;
-    }
-
-    .search-form {
-      max-width: 95%;
-      height: 390px;
-    }
-    
-  </style>
+  <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
 
@@ -206,15 +178,15 @@
         // });
 
         let html = `
-        <form id="check-availability-form" action="" method="POST" novalidate class="needs-validation search-form search-form">
+        <form autocomplete="off" id="check-availability-form" action="" method="POST" novalidate class="needs-validation search-form search-form">
           <div class="row">
             <div class="col">
               <div class="row" id="reservations-date-modals">
                   <div class="col d-line p-4 shadow-none">
-                    <input disabled required type="text" class="form-control" name="start" id="start" placeholder="Arrival">
+                    <input autocompleate="false" disabled required type="text" class="form-control" name="start" id="start" placeholder="Arrival">
                   </div>
                   <div class="col d-line p-4 shadow-none">
-                    <input disabled required type="text" class="form-control" name="end" id="end" placeholder="Departure">
+                    <input autocompleate="false" disabled required type="text" class="form-control" name="end" id="end" placeholder="Departure">
                   </div>
               </div>
             </div>
