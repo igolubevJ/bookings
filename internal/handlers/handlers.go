@@ -19,6 +19,7 @@ var Repo *Repository
 type Repository struct {
 	App *config.AppConfig
 }
+
 // NewRepo create a new repository
 func NewRepo(a *config.AppConfig) *Repository {
 	return &Repository{
@@ -42,7 +43,7 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 // Reservation renders the make a reservation page and displays form
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 	var emptyReservation models.Reservation
-	
+
 	data := make(map[string]interface{})
 	data["reservation"] = emptyReservation
 
@@ -61,10 +62,10 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	reservation := models.Reservation{
-		FirstName: 	r.Form.Get("first_name"),
-		LastName: 	r.Form.Get("last_name"),
-		Email: 			r.Form.Get("email"),
-		Phone: 			r.Form.Get("phone"),
+		FirstName: r.Form.Get("first_name"),
+		LastName:  r.Form.Get("last_name"),
+		Email:     r.Form.Get("email"),
+		Phone:     r.Form.Get("phone"),
 	}
 
 	form := forms.New(r.PostForm)
@@ -93,7 +94,7 @@ func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "generals.page.tmpl", &models.TemplateData{})
 }
 
-// Majors renders a room page 
+// Majors renders a room page
 func (m *Repository) Majors(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "majors.page.tmpl", &models.TemplateData{})
 }
@@ -113,14 +114,14 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 }
 
 type jsonResponse struct {
-	Ok bool					`json:"ok"`
-	Message string	`json:"message"`
+	Ok      bool   `json:"ok"`
+	Message string `json:"message"`
 }
 
 // AvailabilityJSON handles request for availability and send JSON response
 func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 	resp := jsonResponse{
-		Ok: false,
+		Ok:      false,
 		Message: "available",
 	}
 
@@ -152,7 +153,6 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 		StringMap: stringMap,
 	})
 }
-
 
 func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
 	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)

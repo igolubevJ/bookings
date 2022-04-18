@@ -8,16 +8,16 @@ import (
 )
 
 type postData struct {
-	key 	string
+	key   string
 	value string
 }
 
 var theTest = []struct {
-	name 								string
-	url  								string
-	method 							string
-	params 							[]postData
-	expectedStatusCode 	int 
+	name               string
+	url                string
+	method             string
+	params             []postData
+	expectedStatusCode int
 }{
 	{"home", "/", "GET", []postData{}, http.StatusOK},
 	{"about", "/about", "GET", []postData{}, http.StatusOK},
@@ -44,7 +44,7 @@ var theTest = []struct {
 
 func TestHandlers(t *testing.T) {
 	routes := getRoutes()
-	
+
 	ts := httptest.NewTLSServer(routes)
 	defer ts.Close()
 
@@ -65,7 +65,7 @@ func TestHandlers(t *testing.T) {
 				values.Add(x.key, x.value)
 			}
 
-			response, err := ts.Client().PostForm(ts.URL + e.url, values)
+			response, err := ts.Client().PostForm(ts.URL+e.url, values)
 			if err != nil {
 				t.Log(err)
 				t.Fatal(err)

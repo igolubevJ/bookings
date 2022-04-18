@@ -45,7 +45,7 @@ func getRoutes() http.Handler {
 
 	app.TemplateCache = tc
 	app.UseCache = true
-	
+
 	repo := NewRepo(&app)
 
 	NewHandlers(repo)
@@ -59,7 +59,7 @@ func getRoutes() http.Handler {
 
 	mux.Get("/", Repo.Home)
 	mux.Get("/about", Repo.About)
-	
+
 	mux.Get("/rooms/general-quaters", Repo.Generals)
 	mux.Get("/rooms/majors-suite", Repo.Majors)
 	mux.Get("/search-availability", Repo.Availability)
@@ -84,8 +84,8 @@ func NoSurf(next http.Handler) http.Handler {
 
 	csrfHandler.SetBaseCookie(http.Cookie{
 		HttpOnly: true,
-		Path: "/",
-		Secure: app.InProduction,
+		Path:     "/",
+		Secure:   app.InProduction,
 		SameSite: http.SameSiteLaxMode,
 	})
 
@@ -96,7 +96,6 @@ func NoSurf(next http.Handler) http.Handler {
 func SessionLoad(next http.Handler) http.Handler {
 	return session.LoadAndSave(next)
 }
-
 
 // Creates a template cash as a map
 func CreateTestTemplateCash() (map[string]*template.Template, error) {
@@ -109,7 +108,7 @@ func CreateTestTemplateCash() (map[string]*template.Template, error) {
 
 	for _, page := range pages {
 		name := filepath.Base(page)
-		
+
 		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
 		if err != nil {
 			fmt.Println("One place for generate error")

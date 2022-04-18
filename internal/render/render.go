@@ -28,14 +28,14 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 	td.Flash = app.Session.PopString(r.Context(), "flash")
 	td.Error = app.Session.PopString(r.Context(), "error")
 	td.Warning = app.Session.PopString(r.Context(), "warning")
-	
+
 	td.CSRFToken = nosurf.Token(r)
 
 	return td
 }
 
 // RenderTemplate renders template using html/template
-func RenderTemplate(w http.ResponseWriter, r *http.Request,tmpl  string, td *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
 	var tc map[string]*template.Template
 
 	if app.UseCache {
@@ -44,15 +44,15 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request,tmpl  string, td *mod
 	} else {
 		tc, _ = CreateTemplateCash()
 	}
-	
+
 	t, ok := tc[tmpl]
 	if !ok {
 		log.Fatal("could not get template from template cash")
-	} 
+	}
 
 	buf := new(bytes.Buffer)
 	td = AddDefaultData(td, r)
-	
+
 	_ = t.Execute(buf, td)
 
 	_, err := buf.WriteTo(w)
@@ -72,7 +72,7 @@ func CreateTemplateCash() (map[string]*template.Template, error) {
 
 	for _, page := range pages {
 		name := filepath.Base(page)
-		
+
 		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
 		if err != nil {
 			fmt.Println("One place for generate error")

@@ -44,7 +44,7 @@ func (f *Form) Has(field string, r *http.Request) bool {
 	return true
 }
 
-// MinLength checks for string minimum length 
+// MinLength checks for string minimum length
 func (f *Form) MinLength(field string, length int, r *http.Request) bool {
 	x := r.Form.Get(field)
 	if len(x) < length {
@@ -55,7 +55,7 @@ func (f *Form) MinLength(field string, length int, r *http.Request) bool {
 	return true
 }
 
-// Valid returns true if there are no errors, otherwise false 
+// Valid returns true if there are no errors, otherwise false
 func (f *Form) Valid() bool {
 	return len(f.Errors) == 0
 }

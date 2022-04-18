@@ -28,9 +28,9 @@ func main() {
 	}
 
 	fmt.Println(fmt.Sprintf("Application Server is startup on http://localhost%s", portNumber))
-	
+
 	srv := &http.Server{
-		Addr: portNumber,
+		Addr:    portNumber,
 		Handler: routes(&app),
 	}
 
@@ -44,8 +44,8 @@ func run() error {
 	// ! change this to true when in production
 	app.InProduction = false
 
-	 // What am I going to put in the session
-	 gob.Register(models.Reservation{})
+	// What am I going to put in the session
+	gob.Register(models.Reservation{})
 
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
@@ -63,7 +63,7 @@ func run() error {
 
 	app.TemplateCache = tc
 	app.UseCache = false
-	
+
 	repo := handlers.NewRepo(&app)
 
 	handlers.NewHandlers(repo)
