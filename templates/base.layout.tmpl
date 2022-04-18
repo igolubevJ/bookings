@@ -122,7 +122,7 @@
           }, false);
         })();
 
-        function alertSuccess(msg, msgType="success") {
+        function notify(msg, msgType="success") {
           notie.alert({
             type: msgType,
             text: msg,
@@ -137,6 +137,18 @@
             confirmButtonText: confirmButtonText
           });
         }
+
+        {{with .Error}}
+          notify("{{.}}", "error")
+        {{end}}
+
+        {{with .Flash}}
+          notify("{{.}}", "success")
+        {{end}}
+
+        {{with .Warning}}
+          notify("{{.}}", "warning")
+        {{end}}
 
         function Prompt() {
           const toast = function(c) {
