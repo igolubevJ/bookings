@@ -22,6 +22,25 @@ var session *scs.SessionManager
 
 // main is the start applcation point
 func main() {
+	err := run()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(fmt.Sprintf("Application Server is startup on http://localhost%s", portNumber))
+	
+	srv := &http.Server{
+		Addr: portNumber,
+		Handler: routes(&app),
+	}
+
+	err = srv.ListenAndServe()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func run() error {
 	// ! change this to true when in production
 	app.InProduction = false
 
@@ -39,6 +58,7 @@ func main() {
 	tc, err := render.CreateTemplateCash()
 	if err != nil {
 		log.Fatal("can not create template cash")
+		return err
 	}
 
 	app.TemplateCache = tc
@@ -49,15 +69,5 @@ func main() {
 	handlers.NewHandlers(repo)
 	render.NewTemplates(&app)
 
-	fmt.Println(fmt.Sprintf("Application Server is startup on http://localhost%s", portNumber))
-	
-	srv := &http.Server{
-		Addr: portNumber,
-		Handler: routes(app),
-	}
-
-	err = srv.ListenAndServe()
-	if err != nil {
-		log.Fatal(err)
-	}
+	return nil
 }
