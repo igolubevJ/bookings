@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/igolubevJ/bookings/internal/config"
 	"github.com/igolubevJ/bookings/internal/handlers"
+	"github.com/igolubevJ/bookings/internal/helpers"
 	"github.com/igolubevJ/bookings/internal/models"
 	"github.com/igolubevJ/bookings/internal/render"
 
@@ -19,6 +21,8 @@ const portNumber = ":5000"
 
 var app config.AppConfig
 var session *scs.SessionManager
+var infoLog *log.Logger
+var errorLog *log.Logger
 
 // main is the start applcation point
 func main() {
@@ -44,6 +48,12 @@ func run() error {
 	// ! change this to true when in production
 	app.InProduction = false
 
+	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
+
+	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErrorLog = errorLog
+
 	// What am I going to put in the session
 	gob.Register(models.Reservation{})
 
@@ -68,6 +78,7 @@ func run() error {
 
 	handlers.NewHandlers(repo)
 	render.NewTemplates(&app)
+	helpers.NewHelpers(&app)
 
 	return nil
 }
