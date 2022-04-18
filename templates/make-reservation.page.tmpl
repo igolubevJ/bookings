@@ -9,14 +9,20 @@
         
         <h1>Make Reservation</h1>
         <form 
-          action="" 
+          action="/make-reservation" 
           method="POST" 
-          class="needs-validation"
+          class="del-needs-validation"
           novalidate>
+
+          <input type="hidden" name="csrf_token" value="{{.CSRFToken}}" />
 
           <div class="form-group mt-5">
             <label for="first_name">First name:</label>
-            <input class="form-control" type="text" name="first_name" id="first_name" required autocomplete="off" />
+            {{with .Form.Errors.Get "first_name"}}
+              <label class="text-danger">{{.}}</label>
+            {{end}}
+            <input class='form-control {{with .Form.Errors.Get "first_name"}} is-invalid {{end}}' type="text" name="first_name" 
+                   id="first_name" required autocomplete="off" />
           </div>
 
           <div class="form-group">
